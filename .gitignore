@@ -1,0 +1,89 @@
+# Uncompressed SQL dumps (keep compressed versions)
+assets/data/shakespert.sql
+
+# Downloaded data files (build artifacts)
+assets/data/shakespert.db
+assets/data/topten.json.age
+assets/data/topten.json
+assets/data/*.db
+
+# Build artifacts
+bin/
+
+# Development extracts
+tmp/
+
+.env
+shakespert.db
+shakespert.sql
+topten.json
+hostkey
+
+# Hugo generated files
+/public/
+/resources/_gen/
+/assets/jsconfig.json
+hugo_stats.json
+
+# Hugo build lock
+.hugo_build.lock
+
+# SQLite databases
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Temporary files
+*_temp.sql
+
+# macOS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+Icon
+.DocumentRevisions-V100
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows files
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# Node modules (if using npm for any tools)
+node_modules/
+
+# Environment files
+.env
+.env.local
+
+# Deployment files
+deploy_rsa
+deploy_rsa.pub
+.deploy*/
+
+# Local netlify folder (if using Netlify)
+.netlify
+
+# Local development server files
+.sass-cache/
+*.sass-cache
