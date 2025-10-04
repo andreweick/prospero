@@ -1,0 +1,10 @@
+version: "2"
+sql:
+  - engine: "sqlite"
+    queries: "internal/features/shakespert/queries.sql"
+    schema: "internal/features/shakespert/schema.sql"
+    gen:
+      go:
+        package: "shakespert"
+        out: "internal/features/shakespert"
+        sql_package: "database/sql"
