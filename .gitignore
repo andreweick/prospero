@@ -2,10 +2,10 @@
 assets/data/shakespert.sql
 
 # Downloaded data files (build artifacts)
-assets/data/shakespert.db
 assets/data/topten.json.age
 assets/data/topten.json
 assets/data/*.db
+assets/data/hostkey.private-key
 
 # Build artifacts
 bin/
@@ -14,7 +14,6 @@ bin/
 tmp/
 
 .env
-shakespert.db
 shakespert.sql
 topten.json
 hostkey
@@ -73,7 +72,6 @@ desktop.ini
 node_modules/
 
 # Environment files
-.env
 .env.local
 
 # Deployment files
