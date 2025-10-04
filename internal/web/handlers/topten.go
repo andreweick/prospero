@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"prospero/internal/features/topten"
 )
@@ -13,13 +14,20 @@ type topTenService interface {
 	GetRandomList() (*topten.TopTenList, error)
 }
 
-// TopTen handles the /api/top-ten endpoint
+// TopTen handles the /api/topten endpoint
 func TopTen(service topTenService) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Get the format parameter (default to json)
+		// Get the format parameter
 		format := r.URL.Query().Get("format")
+
+		// Auto-detect curl and default to ASCII
 		if format == "" {
-			format = "json"
+			userAgent := r.Header.Get("User-Agent")
+			if strings.Contains(strings.ToLower(userAgent), "curl") {
+				format = "ascii"
+			} else {
+				format = "json"
+			}
 		}
 
 		// Get a random list

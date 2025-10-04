@@ -13,9 +13,12 @@ import (
 )
 
 var serveCmd = &cli.Command{
-	Name:        "serve",
-	Usage:       "Start the Prospero server (HTTP + SSH)",
-	Description: `Start the Prospero server with both HTTP and SSH interfaces.`,
+	Name:  "serve",
+	Usage: "Start the Prospero server (HTTP + SSH)",
+	Description: `Start the Prospero server with both HTTP and SSH interfaces.
+
+SSH server is automatically disabled when running on bunny.net Magic Containers.
+Use --force-ssh to override this behavior for testing.`,
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:  "host",
@@ -32,16 +35,23 @@ var serveCmd = &cli.Command{
 			Value: "2222",
 			Usage: "Port for the SSH server",
 		},
+		&cli.BoolFlag{
+			Name:  "force-ssh",
+			Value: false,
+			Usage: "Force SSH server to start even on bunny.net Magic Containers",
+		},
 	},
 	Action: func(c *cli.Context) error {
 		host := c.String("host")
 		httpPort := c.String("http-port")
 		sshPort := c.String("ssh-port")
+		forceSSH := c.Bool("force-ssh")
 
 		config := server.ServerConfig{
 			Host:     host,
 			HTTPPort: httpPort,
 			SSHPort:  sshPort,
+			ForceSSH: forceSSH,
 		}
 
 		// Create a context that cancels on SIGINT or SIGTERM

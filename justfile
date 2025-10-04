@@ -73,9 +73,9 @@ sops:
 serve-custom http_port ssh_port: build
     ./bin/prospero serve --http-port {{http_port}} --ssh-port {{ssh_port}}
 
-# Display a random top-ten list in CLI
-top-ten *args: build
-    ./bin/prospero top-ten {{args}}
+# Display a random topten list in CLI
+topten *args: build
+    ./bin/prospero topten {{args}}
 
 # MCP server
 mcp: build
@@ -103,7 +103,7 @@ demo: build
     @./bin/prospero shakespert work hamlet
     @echo ""
     @echo "🎭 Top 10 List:"
-    @./bin/prospero top-ten --ascii
+    @./bin/prospero topten --ascii
 
 # Run tests
 test:
@@ -138,7 +138,7 @@ run-with-password: build
         read -s password
         export AGE_ENCRYPTION_PASSWORD="$password"
     fi
-    ./bin/prospero top-ten
+    ./bin/prospero topten
 
 serve-with-passwor: build
     #!/usr/bin/env bash
@@ -154,10 +154,10 @@ test-health:
     curl -s http://localhost:8080/health | jq .
 
 test-api-json:
-    curl -s http://localhost:8080/api/top-ten | jq .
+    curl -s http://localhost:8080/api/topten | jq .
 
 test-api-ascii:
-    curl -s http://localhost:8080/api/top-ten?format=ascii
+    curl -s http://localhost:8080/api/topten?format=ascii
 
 # SSH tests (assumes server running on localhost:2222)
 test-ssh-help:
@@ -294,7 +294,7 @@ help:
     @echo "  just demo               # Quick demo of all features"
     @echo ""
     @echo "🖥️  CLI Commands:"
-    @echo "  just top-ten            # Random David Letterman list"
+    @echo "  just topten             # Random David Letterman list"
     @echo "  just shakespert-works   # List Shakespeare's works"
     @echo "  just shakespert-genres  # List available genres"
     @echo ""

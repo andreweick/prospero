@@ -22,7 +22,7 @@ func NewServer(name, version string) *Server {
 		name:            name,
 		version:         version,
 		promptRegistry:  NewPromptRegistry(),
-		protocolVersion: "2024-11-05",
+		protocolVersion: "2025-03-26",
 	}
 }
 

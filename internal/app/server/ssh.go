@@ -113,7 +113,7 @@ func prosperoMiddleware(toptenService *topten.Service, shakespertService *shakes
 			} else {
 				command := strings.ToLower(cmd[0])
 				switch command {
-				case "topten", "top-ten":
+				case "topten":
 					handleTopTenSSH(s, toptenService)
 				case "shakespert", "shakespeare", "works":
 					handleShakespertSSH(s, shakespertService, cmd[1:])

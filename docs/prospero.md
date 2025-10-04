@@ -14,7 +14,7 @@ prospero/
 │   ├── app/                 # Application logic
 │   │   ├── cli/            # CLI command implementations
 │   │   │   ├── root.go     # Root command setup
-│   │   │   ├── topten.go   # top-ten subcommand
+│   │   │   ├── topten.go   # topten subcommand
 │   │   │   ├── serve.go    # serve subcommand
 │   │   │   └── compress.go # compress subcommand
 │   │   └── server/         # Server implementations
@@ -120,7 +120,7 @@ A magical box of edge services and fun utilities
 
 Commands:
   serve     Start the server (HTTP + SSH)
-  top-ten   Display a random Top 10 list
+  topten    Display a random Top 10 list
   compress  Compress and optimize images
   sign-url  Generate a signed URL
 
@@ -128,7 +128,7 @@ Commands:
 $ prospero serve --http-port 8080 --ssh-port 2222
 
 # CLI utilities
-$ prospero top-ten
+$ prospero topten
 $ prospero compress input.jpg --output optimized.jpg --quality 85
 $ prospero sign-url /images/cat.jpg --expires 3h
 ```
@@ -252,8 +252,8 @@ SESSION_SECRET=xxx             # Cookie signing
 #### Public HTTP Endpoints
 ```
 GET  /                        # Landing page
-GET  /top-ten                 # Random Top 10 list (HTML)
-GET  /api/top-ten             # Random Top 10 list (JSON)
+GET  /topten                  # Random Top 10 list (HTML)
+GET  /api/topten              # Random Top 10 list (JSON)
 POST /api/images/process      # Image processing
 GET  /images/{id}             # Signed image URLs
 GET  /health                  # Health check
@@ -295,8 +295,8 @@ serve *args:
     ./bin/prospero serve {{args}}
 
 # Quick shortcuts
-top-ten:
-    ./bin/prospero top-ten
+topten:
+    ./bin/prospero topten
 
 # Container operations
 container-magic:
@@ -329,17 +329,17 @@ lint:
 1. Create new `prospero` repository
 2. Set up basic CLI structure with urfave/cli
 3. Migrate Top Ten functionality as first feature
-4. Implement `prospero top-ten` command
+4. Implement `prospero topten` command
 
 ### Phase 2: Server Core  
 1. Add `prospero serve` command
 2. Migrate existing SSH server functionality
 3. Add basic HTTP server with health check
-4. Implement `/api/top-ten` endpoint
+4. Implement `/api/topten` endpoint
 
 ### Phase 3: Web Interface
 1. Add HTML templates with gomponents
-2. Create `/top-ten` web page
+2. Create `/topten` web page
 3. Add basic styling and layout
 4. Implement landing page
 

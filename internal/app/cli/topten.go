@@ -13,7 +13,7 @@ import (
 )
 
 var topTenCmd = &cli.Command{
-	Name:        "top-ten",
+	Name:        "topten",
 	Usage:       "Display a random David Letterman Top 10 list",
 	Description: `Display a random David Letterman Top 10 list with colorful formatting.`,
 	Flags: []cli.Flag{

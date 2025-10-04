@@ -5,7 +5,7 @@ A magical box of edge services and fun utilities for deployment on bunny.net Mag
 ## Features
 
 - **Single Binary**: One executable that works as both CLI tool and server
-- **Top Ten Lists**: David Letterman-style Top 10 lists
+- **Top Ten Lists**: Dave's-style Top 10 lists
 - **Shakespeare's Complete Works**: Access all 43 of Shakespeare's plays, poems, and sonnets
 - **Multiple Interfaces**: CLI, HTTP REST API, and interactive SSH server
 - **Edge Ready**: Designed for edge deployment on Magic Containers
@@ -35,10 +35,10 @@ go build -o bin/prospero ./cmd/prospero
 ./bin/prospero --help
 
 # Display a random Top 10 list
-./bin/prospero top-ten
+./bin/prospero topten
 
 # Display in ASCII mode (good for terminals/SSH)
-./bin/prospero top-ten --ascii
+./bin/prospero topten --ascii
 
 # Shakespeare commands
 ./bin/prospero shakespert works                    # List all works
@@ -81,8 +81,8 @@ The server provides a REST API on port 8080:
 curl http://localhost:8080/health
 
 # Top Ten Lists
-curl http://localhost:8080/api/top-ten                    # JSON format
-curl http://localhost:8080/api/top-ten?format=ascii      # Plain text
+curl http://localhost:8080/api/topten                    # JSON format
+curl http://localhost:8080/api/topten?format=ascii      # Plain text
 
 # Shakespeare API
 curl http://localhost:8080/api/shakespert/works          # List all works (JSON)
@@ -228,7 +228,7 @@ just sqlc-generate                       # Generate SQL code from queries
 
 ## Data Sources
 
-- **Top Ten Lists**: Encrypted JSON data (David Letterman archives)
+- **Top Ten Lists**: Encrypted JSON data (Dave's archives)
 - **Shakespeare Database**: Complete works database (~6MB compressed)
   - 43 works (plays, poems, sonnets)
   - 5 genres (Comedy, History, Poem, Sonnet, Tragedy) 

@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"fmt"
+	"os"
 	"sync"
 	"time"
 
@@ -14,6 +15,14 @@ type ServerConfig struct {
 	Host     string
 	HTTPPort string
 	SSHPort  string
+	ForceSSH bool // Force SSH server to start even on bunny.net
+}
+
+// isRunningInBunnyMagicContainer detects if the application is running
+// inside a bunny.net Magic Container by checking for bunny.net-specific
+// environment variables
+func isRunningInBunnyMagicContainer() bool {
+	return os.Getenv("BUNNYNET_MC_APPID") != ""
 }
 
 // StartServers starts both HTTP and SSH servers concurrently
@@ -22,11 +31,20 @@ func StartServers(ctx context.Context, config ServerConfig) error {
 	fmt.Printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\r\n")
 	fmt.Printf("Press 'q' to quit or Ctrl+C to stop\r\n\r\n")
 
-	// Validate AGE encryption password before starting servers
-	if err := topten.ValidatePassword(ctx); err != nil {
-		return fmt.Errorf("AGE password validation failed: %w", err)
+	// Determine if SSH should be enabled
+	enableSSH := true
+	if isRunningInBunnyMagicContainer() && !config.ForceSSH {
+		enableSSH = false
+		fmt.Printf("ℹ️  SSH server disabled (running on bunny.net Magic Container)\r\n")
 	}
-	fmt.Printf("✅ AGE encryption password verified\r\n")
+
+	// Validate AGE encryption password before starting servers (only if SSH is enabled)
+	if enableSSH {
+		if err := topten.ValidatePassword(ctx); err != nil {
+			return fmt.Errorf("AGE password validation failed: %w", err)
+		}
+		fmt.Printf("✅ AGE encryption password verified\r\n")
+	}
 
 	var wg sync.WaitGroup
 	errChan := make(chan error, 2)
@@ -44,17 +62,19 @@ func StartServers(ctx context.Context, config ServerConfig) error {
 		}
 	}()
 
-	// Start SSH server in a goroutine
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		defer func() { shutdownChan <- struct{}{} }()
-		if err := StartSSHServer(ctx, config.Host, config.SSHPort); err != nil {
-			if err != context.Canceled {
-				errChan <- fmt.Errorf("SSH server error: %w", err)
+	// Start SSH server in a goroutine (only if enabled)
+	if enableSSH {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			defer func() { shutdownChan <- struct{}{} }()
+			if err := StartSSHServer(ctx, config.Host, config.SSHPort); err != nil {
+				if err != context.Canceled {
+					errChan <- fmt.Errorf("SSH server error: %w", err)
+				}
 			}
-		}
-	}()
+		}()
+	}
 
 	// Wait for either server to fail or context to be cancelled
 	select {

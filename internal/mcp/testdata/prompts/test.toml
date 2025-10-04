@@ -1,0 +1,7 @@
+name = "test-prompt"
+description = "A test prompt for testing"
+
+[[arguments]]
+name = "subject"
+description = "The subject to talk about"
+required = true

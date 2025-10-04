@@ -128,7 +128,7 @@ prospero/
 ```go
 // Priority routing (specific to general)
 /health         → Health check endpoint
-/api/top-ten    → Top Ten API
+/api/topten     → Top Ten API
 /api/shakespert → Shakespert API  
 /api/*          → Future API endpoints
 /*              → Embedded Hugo static files
@@ -206,7 +206,7 @@ if err != nil {
 
 // API routes with /api prefix
 r.Route("/api", func(r chi.Router) {
-    r.Get("/top-ten", handlers.TopTen(toptenService))
+    r.Get("/topten", handlers.TopTen(toptenService))
     r.Get("/shakespert/*", handlers.Shakespert(shakespertService))
 })
 
@@ -1431,7 +1431,7 @@ curl -f http://localhost:8080/health
 curl -f http://localhost:8080/ | grep -q "<html"
 
 # Test API endpoints
-curl -f http://localhost:8080/api/top-ten
+curl -f http://localhost:8080/api/topten
 curl -f http://localhost:8080/api/shakespert/works
 
 # Test social posts API
