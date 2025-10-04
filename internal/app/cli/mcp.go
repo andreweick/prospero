@@ -28,14 +28,22 @@ var mcpCmd = &cli.Command{
 			return fmt.Errorf("failed to load prompts: %w", err)
 		}
 
-		// Register prompts with placeholder handlers
+		// Register prompts with handlers
 		for _, def := range definitions {
 			prompt := def.ToPrompt()
-			// Register with a placeholder handler that returns an error
-			// Users will need to implement actual handlers
-			server.RegisterPrompt(prompt, func(ctx context.Context, args map[string]string) (*mcp.GetPromptResult, error) {
-				return nil, fmt.Errorf("handler not implemented for prompt: %s", prompt.Name)
-			})
+
+			// Use content-based handler for prompts with content, placeholder otherwise
+			var handler mcp.PromptHandler
+			if def.Content != "" {
+				handler = def.CreateHandler()
+			} else {
+				// Placeholder handler for prompts without content
+				handler = func(ctx context.Context, args map[string]string) (*mcp.GetPromptResult, error) {
+					return nil, fmt.Errorf("handler not implemented for prompt: %s", prompt.Name)
+				}
+			}
+
+			server.RegisterPrompt(prompt, handler)
 		}
 
 		// Log loaded prompts to stderr
