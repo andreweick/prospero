@@ -19,7 +19,7 @@ topten.json
 hostkey
 
 # Hugo generated files
-/public/
+public/
 /resources/_gen/
 /assets/jsconfig.json
 hugo_stats.json
